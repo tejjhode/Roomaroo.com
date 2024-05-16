@@ -1,6 +1,5 @@
 
-    const cities = ["SGM",
-    "STR",
+    const cities = [
     "A.Thirumuruganpoondi",
     "A.Vellalapatti",
     "Aadityana",
