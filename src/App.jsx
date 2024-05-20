@@ -6,12 +6,14 @@ import Header from './components/header/Header'
 import authService from './appwrite/auth';
 import './App.css'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import Login from './components/login/login';
+import Login from './pages/Login';
 import Signup from './components/signup/signup';
 import { Outlet } from 'react-router-dom';
-import  Main from './components/main/main';
+import  Main from './components/main/Main';
 import Footer from './components/footer/footer';
 import {login,logout} from "./store/authSlice"
+import Seemore from './components/main/seemore';
+import NA from './components/main/NA';
 
 
 function App() {
@@ -37,14 +39,17 @@ function App() {
       <div>
         <Header />
         <main>
-          TODO:<Outlet />
+        <Routes>
+        {/* <Route path="/" element={<Home />} /> */}
+        <Route path="/seemore" element={<Seemore />} />
+        <Route path="/login" element={<Login />}/>
+        <Route path="/signup" element={<Signup />} />
+        <Route path="/NA" element={<NA />} />
+        </Routes>
         </main>
         <Main />
         <Footer />
-        <Routes>
-        <Route path="/login" element={<Login />} />
-        <Route path="/signup" element={<Signup />} />
-        </Routes>
+        
       </div>
     </Router>
   ):null;

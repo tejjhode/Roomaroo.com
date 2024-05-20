@@ -27,7 +27,9 @@ function Signup() {
         }
     }
   return (
-    <div className="flex items-center justify-center">
+    <div className="border   absolute top-16  w-full h-full" style={{backgroundImage:`url('https://images.unsplash.com/photo-1513542789411-b6a5d4f31634?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTF8fGxvZ2lufGVufDB8fDB8fHww')`,backgroundSize:'cover'}}>
+
+     <div className="flex items-center justify-center mt-48">
             <div className={`mx-auto w-full max-w-lg bg-gray-100 rounded-xl p-10 border border-black/10`}>
             <div className="mb-2 flex justify-center">
                     <span className="inline-block w-full max-w-[100px]">
@@ -82,6 +84,7 @@ function Signup() {
             </div>
 
     </div>
+   </div>
 
   )
 }
