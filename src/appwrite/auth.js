@@ -1,3 +1,4 @@
+
 import { Client, Account, ID } from "appwrite";
 
 
@@ -17,6 +18,7 @@ export class AuthService {
         try {
             const userAccount = await this.account.create(ID.unique(), email, password, name);
             if (userAccount) {
+                
                 return this.login({email, password});
             } else {
                return  userAccount;
@@ -29,6 +31,7 @@ export class AuthService {
     async login({email, password}) {
         try {
             return await this.account.createEmailPasswordSession(email, password);
+             console.log("Login successful")
         } catch (error) {
             throw error;
         }

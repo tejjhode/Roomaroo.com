@@ -1,97 +1,20 @@
-import React,{useState} from 'react'
+import React from 'react'
 import Slider from 'react-slick'
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
-import cities from '../header/city';
+import Header from '../header/Header';
 
 function Main() {
-    const [showSuggestions, setShowSuggestions] = useState(false);
-    const [inputValue, setInputValue] = useState('');
-    const navigate = useNavigate();
-  
-    const handleChange = (e) => {
-      const value = e.target.value;
-      setInputValue(value);
-      setShowSuggestions(true);
-    };
-  
-    const handleSuggestion = (suggestion) => {
-      setInputValue(suggestion);
-      setShowSuggestions(false);
-      search(suggestion);
-    };
-  
-    const filterCity = (value) => {
-      return cities.filter((city) =>
-        city.toLowerCase().includes(value.toLowerCase())
-      );
-    };
-  
-    const search = (suggestion) => {
-      if (typeof suggestion !== 'string') {
-        throw("Invalid input");
-       
-      }
-      if (suggestion.toLowerCase() === 'gwalior') {
-        console.log("City Found");
-        navigate('/')
-      } else {
-        alert(suggestion.toUpperCase()+" is not available now");
-        navigate('/NA')
-        
-      }
-    };
     
-   const clickanywhere = () => {
-         setShowSuggestions(false);
-    };
-
-    const handleSeeMore = () => {
-        navigate('/seemore'); 
-    };
-
-  
-
   return (
-   <div onClick={clickanywhere}>
-     <div className="hero-sec bg-gray-900 py-16 px-6 text-center">
-    <h1 className="text-4xl font-bold mb-4 text-white">Find your next home</h1>
-    <p className="text-lg mb-8 text-white">Search for your next home or apartment with Roomaroo</p>
-    <div className="search mx-auto max-w-lg flex justify-center align-middle">
-      <div className="input-container ">
-        <input 
-          type="text" 
-          placeholder="Search for a city..."
-          value={inputValue}
-          onChange={handleChange}
-          className="w-full py-2 px-4 rounded-full border border-gray-400 focus:outline-none focus:border-blue-500 text-black"
-        />
-        {showSuggestions && (
-          <ul className="absolute top-full left-0 right-0 bg-white border border-gray-300 rounded-b-lg shadow-lg text-black h-64 overflow-hidden overflow-scroll no-scrollbar">
-            {filterCity(inputValue).map((suggestion, index) => (
-              <li
-                key={index}
-                className="cursor-pointer px-4 py-2 hover:bg-gray-100"
-                onClick={() => handleSuggestion(suggestion)}
-              >
-                {suggestion}
-              </li>
-            ))}
-          </ul>
-        )}
-      </div>
-      <button className="bg-blue-500 text-white py-2 px-6 rounded-full ml-2 hover:bg-blue-600" onClick={() => search(inputValue)}>
-        Search
-      </button>
-    </div>
-  </div>
-  <main className="bg-slate-50">
-   
+  <main className="bg-slate-50 ">
+    
     
       <div>
-      <h1 className="text-2xl font-bold text-center mt-0 font-mono">Welcome to Roomaroo</h1>
-      <p className="text-center mt-4 font-serif">Find the best rooms for rent</p>
+      <h1 className="text-2xl font-bold text-center mt-8">Welcome to Roomaroo</h1>
+      <p className="text-center mt-4">Find the best rooms for rent</p>
     </div>
      <div>
         <img src="https://huemanhome.com/wp-content/uploads/2018/10/33.jpg" alt="room" className="w-full h-96 object-cover mt-4"/>
@@ -99,15 +22,15 @@ function Main() {
     <div className="typesofRoom">
         <h1 className="justify-center align-middle ml-96 mt-8 text-3xl font-bold text-gray-600">Find a Place That Fits Your Comfort</h1>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-8 ml-16 ">
-            <div className="bg-gray-200 p-4 h-64 w-2/3 hover:scale-125 ease-in duration-300 room-card rounded-2xl shadow-2xl shadow-black" style={{backgroundImage: `url('https://roomhunt.ee/wp-content/uploads/2018/10/39-2-2-360x360.jpg')`}}>
+            <div className="bg-gray-200 p-4 h-64 w-2/3 hover:scale-125 ease-in duration-300 room-card  rounded-2xl shadow-2xl shadow-black" style={{backgroundImage: `url('https://roomhunt.ee/wp-content/uploads/2018/10/39-2-2-360x360.jpg')`}}>
                 <h3 className="font-bold text-white text-2xl  "><br /><br /><br /><br /><br />For Students</h3>
                 <p className='text-white align-text-bottom '>Find the best rooms for students</p>
                 </div>
-            <div className="bg-gray-200 p-4 h-64 w-2/3 hover:scale-125 ease-in duration-300 rounded-2xl shadow-2xl shadow-black" style={{backgroundImage:`url('https://hips.hearstapps.com/hmg-prod/images/alexander-design-contemporary-family-room-1555952765.jpg')`, backgroundSize:'cover'}}>
+            <div className="bg-gray-200 p-4 h-64 w-2/3 hover:scale-125 ease-in duration-300  rounded-2xl shadow-2xl shadow-black" style={{backgroundImage:`url('https://hips.hearstapps.com/hmg-prod/images/alexander-design-contemporary-family-room-1555952765.jpg')`, backgroundSize:'cover'}}>
                 <h3 className="text-2xl font-bold text-white"><br /><br /><br /><br /><br />For Family</h3>
                 <p className='text-white'>Find the best rooms for family</p>
                 </div>
-                <div className="bg-gray-200 p-4 h-64 w-2/3 hover:scale-125 ease-in duration-300 rounded-2xl shadow-2xl shadow-black " style={{backgroundImage:`url('https://hips.hearstapps.com/hmg-prod/images/girls-bedroom-garrow-kedigan-res14949-1635281078-65245f766f39c.jpeg')`, backgroundSize:'contain'}}>
+                <div className="bg-gray-200 p-4 h-64 w-2/3 hover:scale-125 ease-in duration-300  rounded-2xl shadow-2xl shadow-black" style={{backgroundImage:`url('https://hips.hearstapps.com/hmg-prod/images/girls-bedroom-garrow-kedigan-res14949-1635281078-65245f766f39c.jpeg')`, backgroundSize:'contain'}}>
                 <h3 className="text-2xl font-bold text-white"><br /><br /><br /><br /><br />For Girls</h3>
                 <p className='text-white'>Find the best rooms for Girls</p>
                 </div>
@@ -152,7 +75,7 @@ function Main() {
     <p className="text-sm mb-2"><span className="font-semibold ">Location:</span>Indramani Nagar</p>
     <p className="text-sm mb-2"><span className="font-semibold">Price:</span> Rs. 9000</p>
     <p className="text-sm mb-2"><span className="font-semibold">Occupancy:</span> 3 persons</p>
-    <p className="text-sm mb-2"><span className="font-semibold">For:</span> Students</p>
+    <p className="text-sm mb-2"><span className="font-semibold">For:</span> Girls</p>
   </div>
 </div>
 <div className=" bg-white p-6 rounded-lg flex items-center cursor-pointer hover:scale-90 ease-in duration-300 shadow-2xl ">
@@ -191,16 +114,16 @@ function Main() {
 
             </div>
             <button
-                        onClick={handleSeeMore}
+                        
                         className="bg-blue-500 text-white font-bold py-2 px-4 rounded mt-4"
                     >
-                        See More...
+                        <a href="/seemore">See More...</a>
+                        
                     </button>
         </div>
     </div>  
 
   </main>
-   </div>
   )
 }
 
