@@ -1,4 +1,4 @@
-
+import conf from "../conf/conf";
 import { Client, Account, ID } from "appwrite";
 
 
@@ -8,8 +8,8 @@ export class AuthService {
 
     constructor() {
         this.client
-            .setEndpoint('https://cloud.appwrite.io/v1')
-            .setProject('6641b3d4002d6696ea5f');
+            .setEndpoint("https://cloud.appwrite.io/v1")
+            .setProject("6641b3d4002d6696ea5f");
         this.account = new Account(this.client);
             
     }
@@ -31,10 +31,12 @@ export class AuthService {
     async login({email, password}) {
         try {
             return await this.account.createEmailPasswordSession(email, password);
-             console.log("Login successful")
+            
+            
         } catch (error) {
             throw error;
         }
+         
     }
 
 

@@ -1,11 +1,32 @@
 import React, { useState } from 'react';
 import cities from './city';
 import { useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import LogoutBtn from './Logout';
 
 function Header() {
   const [showSuggestions, setShowSuggestions] = useState(false);
   const [inputValue, setInputValue] = useState('');
   const navigate = useNavigate();
+  const authStatus = useSelector((state) => state.auth.status)
+  const navItems = [
+    {
+      name: 'Home',
+      slug: "/",
+      active: true
+    }, 
+    {
+      name: "Login",
+      slug: "/login",
+      active: !authStatus,
+  },
+  {
+      name: "Signup",
+      slug: "/signup",
+      active: !authStatus,
+  },
+ 
+  ]
 
    const clickanywhere = () => {
     setShowSuggestions(false);
@@ -62,11 +83,22 @@ function Header() {
       <nav className="container mx-auto flex items-center justify-between py-4 ">
         <h1 className="text-2xl font-bold">Roomaroo</h1>
         <ul className="flex space-x-4">
-          <li><button onClick={handleHomeClick} className="hover:text-gray-300">Home</button></li>
+          
+        <li><button onClick={handleHomeClick} className="hover:text-gray-300">Home</button></li>
           <li><button className="hover:text-gray-300">About</button></li>
           <li><button className="hover:text-gray-300">Contact Us</button></li>
-          <li><button onClick={handleLoginClick} className="hover:text-gray-300">Login</button></li>
-          <li><button onClick={handleSignupClick} className="hover:text-gray-300">Sign Up</button></li>
+          
+          {!authStatus && (
+            <li><button onClick={handleLoginClick} className="hover:text-gray-300">Login</button></li>
+          )}
+          {!authStatus && (
+            <li><button onClick={handleSignupClick} className="hover:text-gray-300">Sign Up</button></li>
+            )}
+          {authStatus && (
+              <li>
+                <LogoutBtn />
+              </li>
+            )}
         </ul>
       </nav >
       <div className="hero-sec bg-gray-900 py-16 px-6 text-center">

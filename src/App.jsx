@@ -18,21 +18,33 @@ import Loader from "./components/Loader";
 
 function App() {
   const [loading, setLoading] = useState(true);
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    const timer = setTimeout(() => {
-      setLoading(false);
-    }, 2000);
+    authService.getCurrentUser()
+    .then((userData) => {
+      if (userData) {
+        dispatch(login({userData}))
+      } else {
+        dispatch(logout())
+      }
+    })
+    .finally(() => setLoading(false))
+  }, [])
+  
+  
 
-    return () => clearTimeout(timer);
-  }, []);
 
-  return (
-    <div className="App">
-      {loading ? (
-        <Loader />
-      ) : (
-        <Router>
+  // useEffect(() => {
+  //   const timer = setTimeout(() => {
+  //     setLoading(false);
+  //   }, 2000);
+
+  //   return () => clearTimeout(timer);
+  // }, []);
+  return !loading ? (
+    
+    <Router>
           <div>
             <Header />
 
@@ -46,9 +58,9 @@ function App() {
             <Footer />
           </div>
         </Router>
-      )}
-    </div>
-  );
+  ) : null;
+
+  
 }
 
 export default App;
