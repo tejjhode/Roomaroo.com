@@ -7,6 +7,15 @@ import { useNavigate } from 'react-router-dom';
 import Header from '../header/Header';
 
 function Main() {
+  const navigate = useNavigate();
+
+  const handleClick = () => {
+    navigate('/seemore');
+  };
+
+  const handleFeturedRoom = () => {
+    navigate('/room');
+  }
     
   return (
   <main className="bg-slate-50 ">
@@ -19,18 +28,18 @@ function Main() {
      <div>
         <img src="https://huemanhome.com/wp-content/uploads/2018/10/33.jpg" alt="room" className="w-full h-96 object-cover mt-4"/>
      </div>
-    <div className="typesofRoom">
+    <div className="typesofRoom ">
         <h1 className="justify-center align-middle ml-96 mt-8 text-3xl font-bold text-gray-600">Find a Place That Fits Your Comfort</h1>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-8 ml-16 ">
-            <div className="bg-gray-200 p-4 h-64 w-2/3 hover:scale-125 ease-in duration-300 room-card  rounded-2xl shadow-2xl shadow-black" style={{backgroundImage: `url('https://roomhunt.ee/wp-content/uploads/2018/10/39-2-2-360x360.jpg')`}}>
-                <h3 className="font-bold text-white text-2xl  "><br /><br /><br /><br /><br />For Students</h3>
+        <div  className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-8 ml-16 ">
+            <div onClick={handleClick}  className="bg-gray-200 p-4 h-64 w-2/3 hover:scale-125 ease-in duration-300 room-card  rounded-2xl shadow-2xl shadow-black cursor-poiter" style={{backgroundImage: `url('https://roomhunt.ee/wp-content/uploads/2018/10/39-2-2-360x360.jpg')`}}>
+                <h3  className="font-bold text-white text-2xl  "><br /><br /><br /><br /><br />For Students</h3>
                 <p className='text-white align-text-bottom '>Find the best rooms for students</p>
                 </div>
-            <div className="bg-gray-200 p-4 h-64 w-2/3 hover:scale-125 ease-in duration-300  rounded-2xl shadow-2xl shadow-black" style={{backgroundImage:`url('https://hips.hearstapps.com/hmg-prod/images/alexander-design-contemporary-family-room-1555952765.jpg')`, backgroundSize:'cover'}}>
+            <div onClick={handleClick} className="bg-gray-200 p-4 h-64 w-2/3 hover:scale-125 ease-in duration-300  rounded-2xl shadow-2xl shadow-black cursor-poiter" style={{backgroundImage:`url('https://hips.hearstapps.com/hmg-prod/images/alexander-design-contemporary-family-room-1555952765.jpg')`, backgroundSize:'cover'}}>
                 <h3 className="text-2xl font-bold text-white"><br /><br /><br /><br /><br />For Family</h3>
                 <p className='text-white'>Find the best rooms for family</p>
                 </div>
-                <div className="bg-gray-200 p-4 h-64 w-2/3 hover:scale-125 ease-in duration-300  rounded-2xl shadow-2xl shadow-black" style={{backgroundImage:`url('https://hips.hearstapps.com/hmg-prod/images/girls-bedroom-garrow-kedigan-res14949-1635281078-65245f766f39c.jpeg')`, backgroundSize:'contain'}}>
+                <div onClick={handleClick} className="bg-gray-200 p-4 h-64 w-2/3 hover:scale-125 ease-in duration-300  rounded-2xl shadow-2xl shadow-black cursor-poiter" style={{backgroundImage:`url('https://hips.hearstapps.com/hmg-prod/images/girls-bedroom-garrow-kedigan-res14949-1635281078-65245f766f39c.jpeg')`, backgroundSize:'contain'}}>
                 <h3 className="text-2xl font-bold text-white"><br /><br /><br /><br /><br />For Girls</h3>
                 <p className='text-white'>Find the best rooms for Girls</p>
                 </div>
