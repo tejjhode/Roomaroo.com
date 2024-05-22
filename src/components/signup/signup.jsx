@@ -6,6 +6,7 @@ import { useForm } from 'react-hook-form'
 import { login } from '../../store/authSlice'
 import Input from '../Input'
 import Button from '../Button'
+import { setNameAndEmail } from '../../store/authSlice'
 
 function Signup() {
     const { register, handleSubmit } = useForm();
@@ -20,12 +21,20 @@ function Signup() {
             if(userData){
                 const userData = await authService.getCurrentUser()
                 if(userData) dispatch(login(userData));
+                dispatch(setNameAndEmail({name: data.name, email: data.email}));
                 navigate("/")
             }
         } catch (error) {
             setError(error.message);
         }
+       
+          
+        
+
+        
+       
     }
+   
   return (
     <div className="border   absolute top-16  w-full h-full" style={{backgroundImage:`url('https://images.unsplash.com/photo-1513542789411-b6a5d4f31634?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTF8fGxvZ2lufGVufDB8fDB8fHww')`,backgroundSize:'cover'}}>
 
@@ -90,3 +99,5 @@ function Signup() {
 }
 
 export default Signup
+
+ 

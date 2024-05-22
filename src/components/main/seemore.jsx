@@ -1,17 +1,11 @@
 import React, { useState } from 'react';
 import '@fortawesome/fontawesome-free/css/all.min.css';
 
-const arr = [{name:"tejaswa"},{name:"yugal"},{name:"yash"}]
-
 function Seemore() {
   const [budget, setBudget] = useState({ min: 1000, max: 100000 });
   useState
 
-  console.log(arr);
-
-  arr.map((item)=>{
-    console.log(item.name);
-  })
+ 
 
   const handleBudgetChange = (e) => {
     const { name, value } = e.target;

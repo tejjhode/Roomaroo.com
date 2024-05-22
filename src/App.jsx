@@ -9,12 +9,12 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Login from "./pages/Login";
 import Signup from "./components/signup/signup";
 import { Outlet } from "react-router-dom";
-import Main from "./components/main/Main";
+import Main from "./components/main/main";
 import Footer from "./components/footer/footer";
 import { login, logout } from "./store/authSlice";
 import Seemore from "./components/main/seemore";
 import NA from "./components/main/NA";
-import Loader from "./components/Loader";
+import Profile from "./components/Profile/Profile";
 
 function App() {
   const [loading, setLoading] = useState(true);
@@ -32,24 +32,18 @@ function App() {
     .finally(() => setLoading(false))
   }, [])
   
-  
-
-
-  // useEffect(() => {
-  //   const timer = setTimeout(() => {
-  //     setLoading(false);
-  //   }, 2000);
-
-  //   return () => clearTimeout(timer);
-  // }, []);
   return !loading ? (
     
     <Router>
           <div>
+          
+            
             <Header />
 
             <Routes>
+            <Route path="/profile" element={<Profile />} />
               <Route path="/" element={<Main />} />
+              
               <Route path="/seemore" element={<Seemore />} />
               <Route path="/login" element={<Login />} />
               <Route path="/signup" element={<Signup />} />

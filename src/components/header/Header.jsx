@@ -9,24 +9,7 @@ function Header() {
   const [inputValue, setInputValue] = useState('');
   const navigate = useNavigate();
   const authStatus = useSelector((state) => state.auth.status)
-  const navItems = [
-    {
-      name: 'Home',
-      slug: "/",
-      active: true
-    }, 
-    {
-      name: "Login",
-      slug: "/login",
-      active: !authStatus,
-  },
-  {
-      name: "Signup",
-      slug: "/signup",
-      active: !authStatus,
-  },
- 
-  ]
+    
 
    const clickanywhere = () => {
     setShowSuggestions(false);
@@ -77,6 +60,9 @@ function Header() {
   const handleSignupClick = () => {
     navigate('/signup');
   };
+  const handleProfileClick = () => {
+    navigate('/profile');
+  }
 
   return (
     <header className="bg-gray-800 text-white " onClick={clickanywhere}>
@@ -94,8 +80,11 @@ function Header() {
           {!authStatus && (
             <li><button onClick={handleSignupClick} className="hover:text-gray-300">Sign Up</button></li>
             )}
+            {authStatus && (
+              <li><button className="hover:text-gray-300" onClick={handleProfileClick}>Profile</button></li>
+            )}
           {authStatus && (
-              <li>
+              <li onClick={handleHomeClick}>
                 <LogoutBtn />
               </li>
             )}
