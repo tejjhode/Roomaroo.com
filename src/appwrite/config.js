@@ -13,7 +13,7 @@ export class Service {
         this.storage = new Storage(this.client);
     }
      
-    async createPost({tittle, slug,price ,size,bhk,location,description,images,type,furnished,bathroom,userid}) {
+    async createPost({tittle, slug,price ,size,bhk,location,description,images,type,furnished,bathroom,userid,independent}) {
         try {
             return await this.databases.createDocument(
                 "6641b491001661845cef",
@@ -30,14 +30,15 @@ export class Service {
                 type,
                 furnished,
                 bathroom,
-               userid
+               userid,
+               independent
             });
         } catch (error) {
             console.log("Appwrite serive :: createPost :: error", error);
         }
     }
 
-    async  updatePost(slug,{tittle,price ,size,bhk,location,description,images,type,furnished,bathroom}) {
+    async  updatePost(slug,{tittle,price ,size,bhk,location,description,images,type,furnished,bathroom,independent}) {
         try {
             return await this.databases.updateDocument(
                 "6641b491001661845cef",
@@ -53,7 +54,8 @@ export class Service {
                     images,
                     type,
                     furnished,
-                    bathroom
+                    bathroom,
+                    independent
                 });
         } catch (error) {
             console.log("Appwrite serive :: updatePost :: error", error);

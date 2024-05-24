@@ -17,6 +17,7 @@ export default function RoomForRentForm({ post }) {
       accommodationType: post?.accommodationType || '',
       bathrooms: post?.bathrooms || '',
       furnished: post?.furnished || '',
+        independent: post?.independent || '',
     }
   });
 
@@ -30,10 +31,10 @@ export default function RoomForRentForm({ post }) {
       const file = data.image && data.image[0] ? await appwriteServices.uploadFile(data.image[0]) : null;
 
       if (post) {
-        if (post.image) {
+        if (file && post.image) {
           await appwriteServices.deleteFile(post.image);
         }
-        console.log( post.image);
+        
         const dbPost = await appwriteServices.updatePost(post.$id, {
           ...data,
           image: file ? file.$id : post.image
@@ -46,7 +47,9 @@ export default function RoomForRentForm({ post }) {
           throw new Error('User data is missing');
         }
         if (file) {
-          data.image = file.$id;
+            const fileId = file.$id;
+            data.image = fileId;
+          
         }
         const dbPost = await appwriteServices.createPost({ ...data, userid: userData.$id });
         if (dbPost) {
@@ -195,6 +198,7 @@ export default function RoomForRentForm({ post }) {
               <option value="girls">Girls</option>
               <option value="boys">Boys</option>
             </select>
+            
           </div>
           <div className="mb-6">
             <label className="block text-gray-700 font-bold mb-2" htmlFor="bathrooms">
@@ -241,6 +245,31 @@ export default function RoomForRentForm({ post }) {
                 className="mr-2 leading-tight"
               />
               <label htmlFor="furnishedSemi" className="text-gray-700">Semi-Furnished</label>
+            </div>
+          </div>
+          <div className="mb-6">
+            <label className="block text-gray-700 font-bold mb-2" htmlFor="independent">
+              Independent:
+            </label>
+            <div className="flex items-center">
+              <input
+                type="radio"
+                id="independentYes"
+                name="independent"
+                value="yes"
+                {...register("independent", { required: true })}
+                className="mr-2 leading-tight"
+              />
+              <label htmlFor="independentYes" className="mr-4 text-gray-700">Independent</label>
+              <input
+                type="radio"
+                id="independentNo"
+                name="independent"
+                value="no"
+                {...register("independent", { required: true })}
+                className="mr-2 leading-tight"
+              />
+              <label htmlFor="independentNo" className="mr-4 text-gray-700">Non-Independent</label>
             </div>
           </div>
           <div className="mb-6">
