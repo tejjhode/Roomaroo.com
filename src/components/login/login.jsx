@@ -7,6 +7,7 @@ import { login as authLogin } from "../../store/authSlice";
 import Input from "../Input";
 import Button from "../Button";
 import Signup from "../signup/signup";
+import Logo from "../Logo";
 
 function Login() {
   const navigate = useNavigate();
@@ -45,7 +46,7 @@ function Login() {
         >
           <div className="mb-2 flex justify-center">
             <span className="inline-block w-full max-w-[100px]">
-              {/* <Logo width="100%" /> */}
+              <Logo width="100%" />
             </span>
           </div>
           <h2 className="text-center text-2xl font-bold leading-tight">
