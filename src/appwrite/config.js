@@ -13,7 +13,7 @@ export class Service {
         this.storage = new Storage(this.client);
     }
      
-    async createPost({tittle, slug,price ,size,bhk,location,description,images,type,furnished,bathroom,userid,independent}) {
+    async createPost({tittle, slug,price ,size,bhk,location,description,image,type,furnished,bathroom,userid,independent}) {
         try {
             return await this.databases.createDocument(
                 "6641b491001661845cef",
@@ -26,7 +26,7 @@ export class Service {
                 bhk,
                 location,
                 description,
-                images,
+                image,
                 type,
                 furnished,
                 bathroom,
@@ -38,7 +38,7 @@ export class Service {
         }
     }
 
-    async  updatePost(slug,{tittle,price ,size,bhk,location,description,images,type,furnished,bathroom,independent}) {
+    async  updatePost(slug,{tittle,price ,size,bhk,location,description,image,type,furnished,bathroom,independent}) {
         try {
             return await this.databases.updateDocument(
                 "6641b491001661845cef",
@@ -51,7 +51,7 @@ export class Service {
                     bhk,
                     location,
                     description,
-                    images,
+                    image,
                     type,
                     furnished,
                     bathroom,

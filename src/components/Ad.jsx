@@ -9,7 +9,7 @@ function Ad({ $id, tittle, price, size, bhk, type, furnished, bathroom, image,in
       <div className=" bg-white h-40 w-3/4 rounded-2xl flex shadow-2xl shadow-black mt-6 ml-10">
         
           <img
-            src=""
+            src={appwriteServices.getFilePreview(image)}
             alt={tittle}
             className="h-32 w-44 mt-4 ml-4 rounded-3xl"
           />
