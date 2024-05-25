@@ -1,12 +1,13 @@
 import React from 'react';
-import appwriteServices from '../appwrite/config';
+import appwriteServices from '../../appwrite/config';
 import { Link } from 'react-router-dom';
 
 function Ad({ $id, tittle, price, size, bhk, type, furnished, bathroom, image,independent }) {
+    
   return (
     <Link to={`/post/${$id}`}>
       <div className="">
-      <div className=" bg-white h-40 w-3/4 rounded-2xl flex shadow-2xl shadow-black mt-6 ml-10">
+      <div className=" bg-white h-40 w-3/4 rounded-2xl flex shadow-2xl shadow-black mt-6 ml-20">
         
           <img
             src={appwriteServices.getFilePreview(image)}
@@ -30,18 +31,18 @@ function Ad({ $id, tittle, price, size, bhk, type, furnished, bathroom, image,in
                 <i className="fas fa-bath"></i> {bathroom} Bathrooms
               </p>
               <p>
-                <i className="fas fa-user-graduate"></i> {type}
+                <i className="fas fa-user-graduate"></i> {type === 'Any' ? 'Any':"NA" || type === "Students" ? "Students" : 'NA' || type === "Family" ? "Family" : 'NA' || type === "Boys" ? "Boys" : 'NA' || type === "Girls" ? "Girls" : 'NA'}
               </p>
               <p>
                 <i className="fas fa-ruler-combined"></i> {size} sqft
               </p>
               <p>
-                <i className="fas fa-home"></i> {independent}
+                <i className="fas fa-home"></i> {independent ? 'Independent' : 'Owner lives in'}
               </p>
             </div>
           </div>
         </div>
-        <div className="w-2/8 h-full bg-gray-200 ml-36 rounded-r-2xl">
+        <div className="w-3/8 h-full bg-gray-200 ml-40 rounded-r-2xl">
           <h1 className="font-bold text-2xl ml-14 mt-4">₹{price}</h1>
           <button className="bg-gray-900 w-4/6 h-8 text-white ml-8 mt-3 rounded-3xl">
             Contact Owner

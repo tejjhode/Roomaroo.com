@@ -40,6 +40,7 @@ function App() {
           <div>
             <Header />
             <Routes>
+              
             <Route path="/profile" element={<Profile />} />
               <Route path="/" element={<Main />} />
               <Route path="/addroom" element={<AddRoom />} />

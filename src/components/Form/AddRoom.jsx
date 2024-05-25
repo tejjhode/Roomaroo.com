@@ -14,7 +14,7 @@ export default function RoomForRentForm({ post }) {
       location: post?.location || '',
       size: post?.size || '',
       bhk: post?.bhk || '',
-      accommodationType: post?.accommodationType || '',
+      type: post?.type|| '',
       bathrooms: post?.bathrooms || '',
       furnished: post?.furnished || '',
         independent: post?.independent || '',
@@ -34,7 +34,7 @@ export default function RoomForRentForm({ post }) {
         if (file && post.image) {
           await appwriteServices.deleteFile(post.image);
         }
-        
+        console.log( post.image);
         const dbPost = await appwriteServices.updatePost(post.$id, {
           ...data,
           image: file ? file.$id : post.image
@@ -186,9 +186,9 @@ export default function RoomForRentForm({ post }) {
               Accommodation Type:
             </label>
             <select
-              id="accommodationType"
-              name="accommodationType"
-              {...register("accommodationType", { required: true })}
+              id="type"
+              name="type"
+              {...register("type", { required: true })}
               className="w-full border rounded-md px-3 py-2"
              
             >
@@ -210,7 +210,6 @@ export default function RoomForRentForm({ post }) {
               name="bathrooms"
               {...register("bathrooms", { required: true })}
               className="w-full border rounded-md px-3 py-2"
-              required
             />
           </div>
           <div className="mb-6">
