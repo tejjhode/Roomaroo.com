@@ -34,6 +34,7 @@ export default function RoomForRentForm({ post }) {
         if (file && post.image) {
           await appwriteServices.deleteFile(post.image);
         }
+        console.log( post.image);
         const dbPost = await appwriteServices.updatePost(post.$id, {
           ...data,
           image: file ? file.$id : post.image
@@ -209,6 +210,7 @@ export default function RoomForRentForm({ post }) {
               name="bathrooms"
               {...register("bathrooms", { required: true })}
               className="w-full border rounded-md px-3 py-2"
+              required
             />
           </div>
           <div className="mb-6">
