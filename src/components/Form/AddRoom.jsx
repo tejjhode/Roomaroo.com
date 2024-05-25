@@ -26,42 +26,36 @@ export default function RoomForRentForm({ post }) {
 
 
   const submit = async (data) => {
+    if (post) {
+        const file = data.image[0] ? await appwriteServices.uploadFile(data.image[0]) : null;
 
-    try {
-      const file = data.image && data.image[0] ? await appwriteServices.uploadFile(data.image[0]) : null;
-
-      if (post) {
-        if (file && post.image) {
-          await appwriteServices.deleteFile(post.image);
+        if (file) {
+            appwriteServices.deleteFile(post.image);
         }
-        console.log( post.image);
+
         const dbPost = await appwriteServices.updatePost(post.$id, {
-          ...data,
-          image: file ? file.$id : post.image
+            ...data,
+            image: file ? file.$id : undefined,
         });
+
         if (dbPost) {
-          navigate('/');
+            navigate('/');
         }
-      } else {
-        if (!userData || !userData.$id) {
-          throw new Error('User data is missing');
-        }
+    } else {
+        const file = await appwriteServices.uploadFile(data.image[0]);
+
         if (file) {
             const fileId = file.$id;
             data.image = fileId;
-          
-        }
-        const dbPost = await appwriteServices.createPost({ ...data, userid: userData.$id });
-        if (dbPost) {
-          navigate('/');
-        }
-      }
-    } catch (error) {
-      console.error('Error during post submission:', error);
-    }
-      alert("Room added successfully")
+            const dbPost = await appwriteServices.createPost({ ...data, userid: userData.$id });
 
-  };
+            if (dbPost) {
+                navigate('/');
+            }
+        }
+    }
+};
+
 
 
   const slugTransform = useCallback((value) => {
