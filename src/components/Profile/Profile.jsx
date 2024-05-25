@@ -34,7 +34,7 @@ function Profile() {
   }
 
   return (
-    <div className="fixed top-16 bg-white w-full h-screen shadow-lg">
+    <div className=" absolute top-16 bg-white w-full h-screen shadow-lg">
       <div className="bg-white w-4/6 h-auto mx-auto my-8 shadow-2xl rounded-2xl">
         <h1 className="text-2xl font-bold text-center py-4 bg-zinc-700 rounded-t-2xl text-white">
           Profile

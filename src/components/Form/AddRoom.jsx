@@ -34,7 +34,6 @@ export default function RoomForRentForm({ post }) {
         if (file && post.image) {
           await appwriteServices.deleteFile(post.image);
         }
-        console.log( post.image);
         const dbPost = await appwriteServices.updatePost(post.$id, {
           ...data,
           image: file ? file.$id : post.image
@@ -43,9 +42,9 @@ export default function RoomForRentForm({ post }) {
           navigate('/');
         }
       } else {
-        if (!userData || !userData.$id) {
-          throw new Error('User data is missing');
-        }
+        // if (!userData || !userData.$id) {
+        //   throw new Error('User data is missing');
+        // }
         if (file) {
             const fileId = file.$id;
             data.image = fileId;
