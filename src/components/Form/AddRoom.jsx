@@ -292,7 +292,7 @@ export default function RoomForRentForm({ post }) {
           </button>
         </form>
         {loading && (
-          <div className=" absolute flex justify-center items-center mt-4 top-1/3 left-1/3 bg-white shadow-2xl shadow-black rounded-xl h-60 w-60">
+          <div className=" absolute flex justify-center items-center mt-4 top-1/3 left-1/3 bg-white shadow-2xl shadow-black rounded-2xl">
             <div className=" w-40 h-40 border-4 border-t-4 border-t-blue-500 border-gray-200 rounded-full animate-spin"></div>
           </div>
         )}

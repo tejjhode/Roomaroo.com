@@ -30,7 +30,7 @@ export class Service {
                 type,
                 furnished,
                 bathroom,
-               userid,
+                userid,
                independent
             });
         } catch (error) {
