@@ -97,7 +97,7 @@ function Header() {
                 <button className="hover:hover:bg-gray-400 rounded-2xl w-20 font-serif" onClick={handleProfileClick}>Profile</button>
               </li>
               <li>
-                <LogoutBtn />
+               <div onClick={handleHomeClick}> <LogoutBtn /></div>
               </li>
             </>
           )}

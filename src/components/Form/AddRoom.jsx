@@ -17,16 +17,16 @@ export default function RoomForRentForm({ post }) {
       type: post?.type|| '',
       bathrooms: post?.bathrooms || '',
       furnished: post?.furnished || '',
-        independent: post?.independent || '',
+      independent: post?.independent || '',
     }
   });
 
   const navigate = useNavigate();
   const userData = useSelector((state) => state.auth.userData);
-
+  const [loading, setLoading] = useState(false);
 
   const submit = async (data) => {
-
+    setLoading(true);
     try {
       const file = data.image && data.image[0] ? await appwriteServices.uploadFile(data.image[0]) : null;
 
@@ -34,7 +34,6 @@ export default function RoomForRentForm({ post }) {
         if (file && post.image) {
           await appwriteServices.deleteFile(post.image);
         }
-        console.log( post.image);
         const dbPost = await appwriteServices.updatePost(post.$id, {
           ...data,
           image: file ? file.$id : post.image
@@ -47,9 +46,8 @@ export default function RoomForRentForm({ post }) {
           throw new Error('User data is missing');
         }
         if (file) {
-            const fileId = file.$id;
-            data.image = fileId;
-          
+          const fileId = file.$id;
+          data.image = fileId;
         }
         const dbPost = await appwriteServices.createPost({ ...data, userid: userData.$id });
         if (dbPost) {
@@ -58,11 +56,11 @@ export default function RoomForRentForm({ post }) {
       }
     } catch (error) {
       console.error('Error during post submission:', error);
+    } finally {
+      setLoading(false);
+      alert("Room added successfully");
     }
-      alert("Room added successfully")
-
   };
-
 
   const slugTransform = useCallback((value) => {
     if (value && typeof value === "string") {
@@ -87,7 +85,7 @@ export default function RoomForRentForm({ post }) {
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-slate-400 absolute top-16 w-full">
-      <div className="bg-white shadow-md rounded-2xl p-8 w-full max-w-2xl mt-10">
+      <div className="bg-white shadow-md rounded-2xl p-8 w-full max-w-2xl mt-10 relative">
         <h1 className="text-3xl font-bold mb-6 text-center">Upload Room for Rent</h1>
         <form onSubmit={handleSubmit(submit)}>
           <div className="mb-6">
@@ -126,7 +124,6 @@ export default function RoomForRentForm({ post }) {
               name="description"
               {...register("description", { required: true })}
               className="w-full border rounded-md px-3 py-2"
-              
             ></textarea>
           </div>
           <div className="mb-6">
@@ -139,7 +136,6 @@ export default function RoomForRentForm({ post }) {
               name="price"
               {...register("price", { required: true, valueAsNumber: true })}
               className="w-full border rounded-md px-3 py-2"
-            
             />
           </div>
           <div className="mb-6">
@@ -152,12 +148,11 @@ export default function RoomForRentForm({ post }) {
               name="location"
               {...register("location", { required: true })}
               className="w-full border rounded-md px-3 py-2"
-              
             />
-           </div>
+          </div>
           <div className="mb-6">
             <label className="block text-gray-700 font-bold mb-2" htmlFor="price">
-             Size:
+              Size:
             </label>
             <input
               type="number"
@@ -165,12 +160,11 @@ export default function RoomForRentForm({ post }) {
               name="size"
               {...register("size", { required: true, valueAsNumber: true })}
               className="w-full border rounded-md px-3 py-2"
-            
             />
           </div>
           <div className="mb-6">
             <label className="block text-gray-700 font-bold mb-2" htmlFor="price">
-             BHK:
+              BHK:
             </label>
             <input
               type="number"
@@ -178,7 +172,6 @@ export default function RoomForRentForm({ post }) {
               name="bhk"
               {...register("bhk", { required: true, valueAsNumber: true })}
               className="w-full border rounded-md px-3 py-2"
-            
             />
           </div>
           <div className="mb-6">
@@ -190,7 +183,6 @@ export default function RoomForRentForm({ post }) {
               name="type"
               {...register("type", { required: true })}
               className="w-full border rounded-md px-3 py-2"
-             
             >
               <option value="any">Any</option>
               <option value="student">Students</option>
@@ -198,7 +190,6 @@ export default function RoomForRentForm({ post }) {
               <option value="girls">Girls</option>
               <option value="boys">Boys</option>
             </select>
-            
           </div>
           <div className="mb-6">
             <label className="block text-gray-700 font-bold mb-2" htmlFor="bathrooms">
@@ -284,23 +275,27 @@ export default function RoomForRentForm({ post }) {
               className="w-full border rounded-md px-3 py-2"
             />
             {post && post.image && (
-                    <div className="w-full mb-4">
-                        <img
-                            src={appwriteServices.getFilePreview(post.featuredImage)}
-                            alt={post.title}
-                            className="rounded-lg"
-                        />
-                    </div>
-                )}
+              <div className="w-full mb-4">
+                <img
+                  src={appwriteServices.getFilePreview(post.featuredImage)}
+                  alt={post.title}
+                  className="rounded-lg"
+                />
+              </div>
+            )}
           </div>
           <button
             type="submit"
             className="w-full bg-blue-500 text-white font-bold py-2 px-4 rounded-md hover:bg-blue-600 transition duration-300"
-            
           >
             Submit
           </button>
         </form>
+        {loading && (
+          <div className=" absolute flex justify-center items-center mt-4 top-1/3 left-1/3 bg-white shadow-2xl shadow-black rounded-xl h-60 w-60">
+            <div className=" w-40 h-40 border-4 border-t-4 border-t-blue-500 border-gray-200 rounded-full animate-spin"></div>
+          </div>
+        )}
       </div>
     </div>
   );
