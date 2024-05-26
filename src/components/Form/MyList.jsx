@@ -7,9 +7,9 @@ function MyList() {
   const [filteredList, setFilteredList] = useState([]);
   const [budget, setBudget] = useState({ min: 0, max: 20000 });
   const [accommodationType, setAccommodationType] = useState('any');
-  const [BHK, setBHK] = useState('All');
+  const [BHK, setBHK] = useState('');
   const [sortBy, setSortBy] = useState('Price - Low to High');
-  
+
   useEffect(() => {
     appwriteServices.getPost([]).then((posts) => {
       if (posts) {
@@ -38,8 +38,6 @@ function MyList() {
       [name]: Number(value),
     }));
   };
-
-  
 
   useEffect(() => {
     filterPosts();
