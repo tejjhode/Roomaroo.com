@@ -6,10 +6,10 @@ function MyList() {
   const [list, setList] = useState([]);
   const [filteredList, setFilteredList] = useState([]);
   const [budget, setBudget] = useState({ min: 0, max: 20000 });
-  const [accommodationType, setAccommodationType] = useState('Any');
-  const [BHK, setBHK] = useState('');
+  const [accommodationType, setAccommodationType] = useState('any');
+  const [BHK, setBHK] = useState('All');
   const [sortBy, setSortBy] = useState('Price - Low to High');
-
+  
   useEffect(() => {
     appwriteServices.getPost([]).then((posts) => {
       if (posts) {
@@ -18,6 +18,28 @@ function MyList() {
       }
     });
   }, []);
+
+  const handleAccommodationTypeChange = (e) => {
+    setAccommodationType(e.target.value);
+  };
+
+  const handleBHKChange = (e) => {
+    setBHK(e.target.value);
+  };
+
+  const handleSortByChange = (e) => {
+    setSortBy(e.target.value);
+  };
+
+  const handleBudgetChange = (e) => {
+    const { name, value } = e.target;
+    setBudget((prevBudget) => ({
+      ...prevBudget,
+      [name]: Number(value),
+    }));
+  };
+
+  
 
   useEffect(() => {
     filterPosts();
@@ -29,7 +51,7 @@ function MyList() {
     if (accommodationType !== 'any') {
       filtered = filtered.filter(post => post.type === accommodationType);
     }
-    if (BHK !== '') {
+    if (BHK !== 'All') {
       filtered = filtered.filter(post => post.bhk === Number(BHK));
     }
     filtered = filtered.filter(post => post.price >= budget.min && post.price <= budget.max);
@@ -60,25 +82,7 @@ function MyList() {
     setFilteredList(filtered);
   };
 
-  const handleAccommodationTypeChange = (e) => {
-    setAccommodationType(e.target.value);
-  };
-
-  const handleBHKChange = (e) => {
-    setBHK(e.target.value);
-  };
-
-  const handleSortByChange = (e) => {
-    setSortBy(e.target.value);
-  };
-
-  const handleBudgetChange = (e) => {
-    const { name, value } = e.target;
-    setBudget((prevBudget) => ({
-      ...prevBudget,
-      [name]: Number(value),
-    }));
-  };
+ 
 
   return (
     <div className="absolute top-16 h-full w-full bg-white">
@@ -90,8 +94,8 @@ function MyList() {
               className="ml-2 p-1 rounded text-black"
               value={accommodationType}
               onChange={handleAccommodationTypeChange}
-            >
-                
+            > 
+
               <option>any</option>
               <option>student</option>
               <option>family</option>
@@ -130,7 +134,7 @@ function MyList() {
             </select>
           </label>
           <label className="flex items-center space-x-2">
-            <span>Budget</span>
+            <span>Minimun Budget</span>
             <div className="flex items-center space-x-2">
               <input
                 type="range"
