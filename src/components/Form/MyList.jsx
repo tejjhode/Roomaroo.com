@@ -49,7 +49,7 @@ function MyList() {
     if (accommodationType !== 'any') {
       filtered = filtered.filter(post => post.type === accommodationType);
     }
-    if (BHK !== 'All') {
+    if (BHK !== '') {
       filtered = filtered.filter(post => post.bhk === Number(BHK));
     }
     filtered = filtered.filter(post => post.price >= budget.min && post.price <= budget.max);
