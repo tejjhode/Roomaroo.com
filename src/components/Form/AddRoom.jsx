@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import appwriteServices from '../../appwrite/config';
 import { useSelector } from 'react-redux';
+import authService from '../../appwrite/auth';
 
 export default function RoomForRentForm({ post }) {
   const { register, handleSubmit, setValue, watch, getValues } = useForm({
@@ -24,6 +25,19 @@ export default function RoomForRentForm({ post }) {
   const navigate = useNavigate();
   const userData = useSelector((state) => state.auth.userData);
   const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    const checkUserSession = async () => {
+        try {
+            await authService.account.get();
+        } catch (error) {
+            console.error('User is not logged in', error);
+            navigate('/login'); 
+        }
+    };
+    checkUserSession();
+}, [navigate]);
+
 
   const submit = async (data) => {
     setLoading(true);
