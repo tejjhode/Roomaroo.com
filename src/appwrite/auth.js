@@ -44,6 +44,7 @@ export class AuthService {
             return await this.account.get();
         } catch (error) {
             console.log("Appwrite serive :: getCurrentUser :: error", error);
+            alert("You Need To Login/SignUp First")
         }
 
         return null;

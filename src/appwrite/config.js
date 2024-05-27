@@ -31,7 +31,8 @@ export class Service {
                 furnished,
                 bathroom,
                 userid,
-               independent
+               independent,
+             
             });
         } catch (error) {
             console.log("Appwrite serive :: createPost :: error", error);

@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import Ad from "../Profile/Ad";
 import appwriteServices from '../../appwrite/config';
+// import AppwriteServices from "../../appwrite/auth";
+// import { set } from "react-hook-form";
 
 function MyList() {
   const [list, setList] = useState([]);
@@ -9,6 +11,21 @@ function MyList() {
   const [accommodationType, setAccommodationType] = useState('any');
   const [BHK, setBHK] = useState('');
   const [sortBy, setSortBy] = useState('Price - Low to High');
+  // const [login, setLogin] = useState(false);
+
+  // useEffect(() => {
+  //   const checklogin = async () => {
+  //     try{
+  //       await AppwriteServices.get()
+  //       setLogin(true)
+  //     }
+  //     catch(error){
+  //       alert("Please login to view the content")
+  //       window.location.href = "/login"
+  //   }
+  //   checklogin()
+  // }
+  //   },[]);
 
   useEffect(() => {
     appwriteServices.getPost([]).then((posts) => {
@@ -83,7 +100,9 @@ function MyList() {
  
 
   return (
+    
     <div className="absolute top-16 h-full w-full bg-white">
+
       <nav className="bg-gray-900 w-full h-16 flex items-center justify-center shadow-md">
         <div className="flex space-x-6 text-white">
           <label className="flex items-center space-x-2">
@@ -163,6 +182,8 @@ function MyList() {
         )}
       </div>
     </div>
+    
+   
   );
 }
 
