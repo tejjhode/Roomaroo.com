@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import appwriteServices from '../../appwrite/config';
 import { useSelector } from 'react-redux';
-import authService from '../../appwrite/auth';
+
 
 export default function RoomForRentForm({ post }) {
   const { register, handleSubmit, setValue, watch, getValues } = useForm({
@@ -23,81 +23,61 @@ export default function RoomForRentForm({ post }) {
   });
 
   const navigate = useNavigate();
-  const userData = useSelector((state) => state.auth.userData);
-  const [loading, setLoading] = useState(false);
+    const userData = useSelector((state) => state.auth.userData);
+    const [loading, setLoading] = useState(false);
 
+    const submit = async (data) => {
+        setLoading(true);
+        if (post) {
+            const file = data.image[0] ? await appwriteServices.uploadFile(data.image[0]) : null;
 
-  useEffect(() => {
-    const checkUserSession = async () => {
-        try {
-            await authService.account.get();
-            
-        } catch (error) {
-            console.error('User is not logged in', error);
-            navigate('/login'); 
+            if (file) {
+                appwriteServices.deleteFile(post.image);
+            }
+
+            const dbPost = await appwriteServices.updatePost(post.$id, {
+                ...data,
+                image: file ? file.$id : undefined,
+            });
+
+            if (dbPost) {
+                navigate('/');
+            }
+        } else {
+            const file = await appwriteServices.uploadFile(data.image[0]);
+
+            if (file) {
+                const fileId = file.$id;
+                data.image = fileId;
+                const dbPost = await appwriteServices.createPost({ ...data, userid: userData.$id });
+
+                if (dbPost) {
+                    navigate('/');
+                }
+            }
         }
     };
-    checkUserSession();
-}, [navigate]);
 
+    const slugTransform = useCallback((value) => {
+        if (value && typeof value === "string")
+            return value
+                .trim()
+                .toLowerCase()
+                .replace(/[^a-zA-Z\d\s]+/g, "-")
+                .replace(/\s/g, "-");
 
-  const submit = async (data) => {
-    setLoading(true);
-    try {
-      const file = data.image && data.image[0] ? await appwriteServices.uploadFile(data.image[0]) : null;
+        return "";
+    }, []);
 
-      if (post) {
-        if (file && post.image) {
-          await appwriteServices.deleteFile(post.image);
-        }
-        const dbPost = await appwriteServices.updatePost(post.$id, {
-          ...data,
-          image: file ? file.$id : post.image
+    React.useEffect(() => {
+        const subscription = watch((value, { name }) => {
+            if (name === "title") {
+                setValue("slug", slugTransform(value.title), { shouldValidate: true });
+            }
         });
-        if (dbPost) {
-          navigate('/');
-        }
-      } else {
-        if (!userData || !userData.$id) {
-          throw new Error('User data is missing');
-        }
-        if (file) {
-          const fileId = file.$id;
-          data.image = fileId;
-        }
-        const dbPost = await appwriteServices.createPost({ ...data, userid: userData.$id });
-        if (dbPost) {
-          navigate('/');
-        }
-      }
-    } catch (error) {
-      console.error('Error during post submission:', error);
-    } finally {
-      setLoading(false);
-      alert("Room added successfully");
-    }
-  };
 
-  const slugTransform = useCallback((value) => {
-    if (value && typeof value === "string") {
-      return value
-        .trim()
-        .toLowerCase()
-        .replace(/[^a-zA-Z\d\s]+/g, "-")
-        .replace(/\s/g, "-");
-    }
-    return "";
-  }, []);
-
-  useEffect(() => {
-    const subscription = watch((value, { name }) => {
-      if (name === "tittle") {
-        setValue("slug", slugTransform(value.tittle), { shouldValidate: true });
-      }
-    });
-
-    return () => subscription.unsubscribe();
-  }, [watch, slugTransform, setValue]);
+        return () => subscription.unsubscribe();
+    }, [watch, slugTransform, setValue]);
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-slate-400 absolute top-16 w-full">
