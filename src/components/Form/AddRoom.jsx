@@ -4,80 +4,78 @@ import { useForm } from 'react-hook-form';
 import appwriteServices from '../../appwrite/config';
 import { useSelector } from 'react-redux';
 
-
 export default function RoomForRentForm({ post }) {
   const { register, handleSubmit, setValue, watch, getValues } = useForm({
     defaultValues: {
       tittle: post?.tittle || '',
-      slug: post?.$id || "",
+      slug: post?.$id || '',
       description: post?.description || '',
       price: post?.price || '',
       location: post?.location || '',
       size: post?.size || '',
       bhk: post?.bhk || '',
-      type: post?.type|| '',
+      type: post?.type || '',
       bathrooms: post?.bathrooms || '',
       furnished: post?.furnished || '',
       independent: post?.independent || '',
-    }
+    },
   });
 
   const navigate = useNavigate();
-    const userData = useSelector((state) => state.auth.userData);
-    const [loading, setLoading] = useState(false);
+  const userData = useSelector((state) => state.auth.userData);
+  const [loading, setLoading] = useState(false);
 
-    const submit = async (data) => {
-        setLoading(true);
-        if (post) {
-            const file = data.image[0] ? await appwriteServices.uploadFile(data.image[0]) : null;
-
-            if (file) {
-                appwriteServices.deleteFile(post.image);
-            }
-
-            const dbPost = await appwriteServices.updatePost(post.$id, {
-                ...data,
-                image: file ? file.$id : undefined,
-            });
-
-            if (dbPost) {
-                navigate('/');
-            }
-        } else {
-            const file = await appwriteServices.uploadFile(data.image[0]);
-
-            if (file) {
-                const fileId = file.$id;
-                data.image = fileId;
-                const dbPost = await appwriteServices.createPost({ ...data, userid: userData.$id });
-
-                if (dbPost) {
-                    navigate('/');
-                }
-            }
+  const submit = async (data) => {
+    setLoading(true);
+    try {
+      if (post) {
+        const file = data.image[0] ? await appwriteServices.uploadFile(data.image[0]) : null;
+        if (file) {
+          await appwriteServices.deleteFile(post.image);
         }
-    };
-
-    const slugTransform = useCallback((value) => {
-        if (value && typeof value === "string")
-            return value
-                .trim()
-                .toLowerCase()
-                .replace(/[^a-zA-Z\d\s]+/g, "-")
-                .replace(/\s/g, "-");
-
-        return "";
-    }, []);
-
-    React.useEffect(() => {
-        const subscription = watch((value, { name }) => {
-            if (name === "tittle") {
-                setValue("slug", slugTransform(value.tittle), { shouldValidate: true });
-            }
+        const dbPost = await appwriteServices.updatePost(post.$id, {
+          ...data,
+          image: file ? file.$id : undefined,
         });
+        if (dbPost) {
+          navigate('/');
+        }
+      } else {
+        const file = await appwriteServices.uploadFile(data.image[0]);
+        if (file) {
+          data.image = file.$id;
+          const dbPost = await appwriteServices.createPost({ ...data, userid: userData.$id });
+          if (dbPost) {
+            navigate('/');
+          }
+        }
+      }
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
-        return () => subscription.unsubscribe();
-    }, [watch, slugTransform, setValue]);
+  const slugTransform = useCallback((value) => {
+    if (value && typeof value === 'string') {
+      return value
+        .trim()
+        .toLowerCase()
+        .replace(/[^a-zA-Z\d\s]+/g, '-')
+        .replace(/\s/g, '-');
+    }
+    return '';
+  }, []);
+
+  useEffect(() => {
+    const subscription = watch((value, { name }) => {
+      if (name === 'tittle') {
+        setValue('slug', slugTransform(value.tittle), { shouldValidate: true });
+      }
+    });
+    return () => subscription.unsubscribe();
+  }, [watch, slugTransform, setValue]);
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-slate-400 absolute top-16 w-full">
@@ -92,7 +90,7 @@ export default function RoomForRentForm({ post }) {
               type="text"
               id="tittle"
               name="title"
-              {...register("tittle", { required: true })}
+              {...register('tittle', { required: true })}
               className="w-full border rounded-md px-3 py-2"
             />
           </div>
@@ -104,9 +102,9 @@ export default function RoomForRentForm({ post }) {
               type="text"
               id="slug"
               name="slug"
-              {...register("slug", { required: true })}
+              {...register('slug', { required: true })}
               onInput={(e) => {
-                setValue("slug", slugTransform(e.currentTarget.value), { shouldValidate: true });
+                setValue('slug', slugTransform(e.currentTarget.value), { shouldValidate: true });
               }}
               className="w-full border rounded-md px-3 py-2"
             />
@@ -118,7 +116,7 @@ export default function RoomForRentForm({ post }) {
             <textarea
               id="description"
               name="description"
-              {...register("description", { required: true })}
+              {...register('description', { required: true })}
               className="w-full border rounded-md px-3 py-2"
             ></textarea>
           </div>
@@ -130,7 +128,7 @@ export default function RoomForRentForm({ post }) {
               type="number"
               id="price"
               name="price"
-              {...register("price", { required: true, valueAsNumber: true })}
+              {...register('price', { required: true, valueAsNumber: true })}
               className="w-full border rounded-md px-3 py-2"
             />
           </div>
@@ -142,7 +140,7 @@ export default function RoomForRentForm({ post }) {
               type="text"
               id="location"
               name="location"
-              {...register("location", { required: true })}
+              {...register('location', { required: true })}
               className="w-full border rounded-md px-3 py-2"
             />
           </div>
@@ -154,7 +152,7 @@ export default function RoomForRentForm({ post }) {
               type="number"
               id="size"
               name="size"
-              {...register("size", { required: true, valueAsNumber: true })}
+              {...register('size', { required: true, valueAsNumber: true })}
               className="w-full border rounded-md px-3 py-2"
             />
           </div>
@@ -166,7 +164,7 @@ export default function RoomForRentForm({ post }) {
               type="number"
               id="bhk"
               name="bhk"
-              {...register("bhk", { required: true, valueAsNumber: true })}
+              {...register('bhk', { required: true, valueAsNumber: true })}
               className="w-full border rounded-md px-3 py-2"
             />
           </div>
@@ -177,7 +175,7 @@ export default function RoomForRentForm({ post }) {
             <select
               id="type"
               name="type"
-              {...register("type", { required: true })}
+              {...register('type', { required: true })}
               className="w-full border rounded-md px-3 py-2"
             >
               <option value="any">Any</option>
@@ -195,7 +193,7 @@ export default function RoomForRentForm({ post }) {
               type="number"
               id="bathrooms"
               name="bathrooms"
-              {...register("bathrooms", { required: true })}
+              {...register('bathrooms', { required: true })}
               className="w-full border rounded-md px-3 py-2"
               required
             />
@@ -210,7 +208,7 @@ export default function RoomForRentForm({ post }) {
                 id="furnishedYes"
                 name="furnished"
                 value="yes"
-                {...register("furnished", { required: true })}
+                {...register('furnished', { required: true })}
                 className="mr-2 leading-tight"
               />
               <label htmlFor="furnishedYes" className="mr-4 text-gray-700">Yes</label>
@@ -219,7 +217,7 @@ export default function RoomForRentForm({ post }) {
                 id="furnishedNo"
                 name="furnished"
                 value="no"
-                {...register("furnished", { required: true })}
+                {...register('furnished', { required: true })}
                 className="mr-2 leading-tight"
               />
               <label htmlFor="furnishedNo" className="mr-4 text-gray-700">No</label>
@@ -228,7 +226,7 @@ export default function RoomForRentForm({ post }) {
                 id="furnishedSemi"
                 name="furnished"
                 value="semi"
-                {...register("furnished", { required: true })}
+                {...register('furnished', { required: true })}
                 className="mr-2 leading-tight"
               />
               <label htmlFor="furnishedSemi" className="text-gray-700">Semi-Furnished</label>
@@ -244,7 +242,7 @@ export default function RoomForRentForm({ post }) {
                 id="independentYes"
                 name="independent"
                 value="yes"
-                {...register("independent", { required: true })}
+                {...register('independent', { required: true })}
                 className="mr-2 leading-tight"
               />
               <label htmlFor="independentYes" className="mr-4 text-gray-700">Independent</label>
@@ -253,7 +251,7 @@ export default function RoomForRentForm({ post }) {
                 id="independentNo"
                 name="independent"
                 value="no"
-                {...register("independent", { required: true })}
+                {...register('independent', { required: true })}
                 className="mr-2 leading-tight"
               />
               <label htmlFor="independentNo" className="mr-4 text-gray-700">Non-Independent</label>
@@ -267,13 +265,13 @@ export default function RoomForRentForm({ post }) {
               type="file"
               id="image"
               name="image"
-              {...register("image", { required: true })}
+              {...register('image', { required: true })}
               className="w-full border rounded-md px-3 py-2"
             />
             {post && post.image && (
               <div className="w-full mb-4">
                 <img
-                  src={appwriteServices.getFilePreview(post.featuredImage)}
+                  src={appwriteServices.getFilePreview(post.image)}
                   alt={post.title}
                   className="rounded-lg"
                 />
@@ -288,10 +286,10 @@ export default function RoomForRentForm({ post }) {
           </button>
         </form>
         {loading && (
-          <div className=" absolute flex justify-center items-center mt-4 top-1/3 left-1/3 bg-white shadow-2xl shadow-black rounded-2xl h-52  w-52">
-            <div className=" w-40 h-40 border-4 border-t-4 border-t-blue-500 border-gray-200 rounded-full animate-spin"></div>
+          <div className="absolute flex justify-center items-center mt-4 top-1/3 left-1/3 bg-white shadow-2xl shadow-black rounded-2xl h-52 w-52">
+            <div className="w-40 h-40 border-4 border-t-4 border-t-blue-500 border-gray-200 rounded-full animate-spin"></div>
           </div>
-          )}
+        )}
       </div>
     </div>
   );
