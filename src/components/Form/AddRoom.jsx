@@ -71,8 +71,8 @@ export default function RoomForRentForm({ post }) {
 
     React.useEffect(() => {
         const subscription = watch((value, { name }) => {
-            if (name === "title") {
-                setValue("slug", slugTransform(value.title), { shouldValidate: true });
+            if (name === "tittle") {
+                setValue("slug", slugTransform(value.tittle), { shouldValidate: true });
             }
         });
 
