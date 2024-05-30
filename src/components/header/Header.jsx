@@ -66,38 +66,38 @@ function Header() {
   };
 
   return (
-    <header className="bg-gray-800 text-white" onClick={clickAnywhere}>
+    <header className="bg-gray-800 text-white max-md:w-full" onClick={clickAnywhere}>
       <nav className="container mx-auto flex items-center  py-4 px-6 ">
         <div className="flex items-center">
-          <div className=" h-8 w-36 cursor-pointer" onClick={handleHomeClick}><Logo /></div>
+          <div className=" h-8 w-36 cursor-pointer max-md:w-32 max-md:mt-2 " onClick={handleHomeClick}><Logo /></div>
         </div>
-        <ul className="flex space-x-40 ml-60">
+        <ul className="flex space-x-40 ml-60 max-md:ml-0 max-sm:space-x-0 max-md:text-xs">
           <li>
-            <button onClick={handleHomeClick} className="hover:bg-gray-400 rounded-2xl w-20 font-serif">Home</button>
+            <button onClick={handleHomeClick} className="hover:bg-gray-400 rounded-2xl w-20 font-serif max-md:w-10 ">Home</button>
           </li>
           <li>
-            <button className="hover:bg-gray-400 rounded-2xl w-20 font-serif">About</button>
+            <button className="hover:bg-gray-400 rounded-2xl w-20 font-serif max-md:w-10">About</button>
           </li>
           <li>
-            <button className="hover:bg-gray-400 rounded-2xl w-20 font-serif">Contact Us</button>
+            <button className="hover:bg-gray-400 rounded-2xl w-20 font-serif max-md:w-15">Contact Us</button>
           </li>
           {!authStatus && (
             <>
               <li>
-                <button onClick={handleLoginClick} className="hover:bg-gray-400 rounded-2xl w-20 font-serif">Login</button>
+                <button onClick={handleLoginClick} className="hover:bg-gray-400 rounded-2xl w-20 font-serif max-md:w-10">Login</button>
               </li>
               <li>
-                <button onClick={handleSignupClick} className="hover:bg-gray-400 rounded-2xl w-20 font-serif">Sign Up</button>
+                <button onClick={handleSignupClick} className="hover:bg-gray-400 rounded-2xl w-20 font-serif max-md:w-12">Sign Up</button>
               </li>
             </>
           )}
           {authStatus && (
             <>
               <li>
-                <button className="hover:hover:bg-gray-400 rounded-2xl w-20 font-serif" onClick={handleProfileClick}>Profile</button>
+                <button className="hover:hover:bg-gray-400 rounded-2xl w-20 font-serif max-md:w-10" onClick={handleProfileClick}>Profile</button>
               </li>
               <li>
-               <div onClick={handleHomeClick}> <LogoutBtn /></div>
+               <div onClick={handleHomeClick}>  <LogoutBtn /></div>
               </li>
             </>
           )}

@@ -103,12 +103,12 @@ function MyList() {
     
     <div className="absolute top-16 h-full w-full bg-white">
 
-      <nav className="bg-gray-900 w-full h-16 flex items-center justify-center shadow-md">
-        <div className="flex space-x-6 text-white">
-          <label className="flex items-center space-x-2">
-            <span>Accommodation Type</span>
+      <nav className="bg-gray-900 w-full h-16 flex items-center justify-center shadow-md  ">
+        <div className="flex space-x-6 text-white max-md:space-x-4 ">
+          <label className="flex items-center space-x-2 max-md:text-sm">
+            <span>Type</span>
             <select
-              className="ml-2 p-1 rounded text-black"
+              className="ml-2 p-1 rounded text-black max-md:w-6 max-md:h-6"
               value={accommodationType}
               onChange={handleAccommodationTypeChange}
             > 
@@ -120,10 +120,10 @@ function MyList() {
               <option>boys</option>
             </select>
           </label>
-          <label className="flex items-center space-x-2">
+          <label className="flex items-center space-x-2 max-md:text-sm">
             <span>BHK</span>
             <select
-              className="ml-2 p-1 rounded text-black"
+              className="ml-2 p-1 rounded text-black max-md:w-6"
               value={BHK}
               onChange={handleBHKChange}
             >
@@ -135,10 +135,10 @@ function MyList() {
               <option>5</option>
             </select>
           </label>
-          <label className="flex items-center space-x-2">
+          <label className="flex items-center space-x-2 max-md:text-sm">
             <span>Sort by</span>
             <select
-              className="ml-2 p-1 rounded text-black"
+              className="ml-2 p-1 rounded text-black max-md:w-6"
               value={sortBy}
               onChange={handleSortByChange}
             >
@@ -150,9 +150,9 @@ function MyList() {
               <option>Rate/sqft - High to Low</option>
             </select>
           </label>
-          <label className="flex items-center space-x-2">
-            <span>Minimun Budget</span>
-            <div className="flex items-center space-x-2">
+          <label className="flex items-center space-x-2 max-md:text-sm">
+            <span>Budget</span>
+            <div className="flex items-center space-x-2 ">
               <input
                 type="range"
                 name="min"
@@ -161,9 +161,9 @@ function MyList() {
                 step="5000"
                 value={budget.min}
                 onChange={handleBudgetChange}
-                className="slider"
+                className="slider max-md:w-10"
               />
-              <div className="flex flex-col items-center text-white">
+              <div className="flex flex-col items-center text-white max-md:text-xs">
                 <span>Price: {budget.min}</span>
               </div>
             </div>

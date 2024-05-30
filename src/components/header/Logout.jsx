@@ -12,7 +12,7 @@ function LogoutBtn() {
     }
   return (
     <button
-    className="hover:text-gray-300"
+    className="hover:text-gray-300 max-md:w-14"
     onClick={logoutHandler}
     >Logout</button>
   )
