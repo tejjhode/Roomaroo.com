@@ -50,7 +50,7 @@ function App() {
               <Route path="/signup" element={<Signup />} />
               <Route path="/NA" element={<NA />} />
             </Routes>
-            <Footer />
+            
           </div>
         </Router>
   ) : null;
