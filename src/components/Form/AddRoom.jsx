@@ -1,12 +1,12 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
-import appwriteServices from '../../appwrite/config';
+import appwriteService from '../../appwrite/config';
 import { useSelector } from 'react-redux';
 import authService from '../../appwrite/auth';
 
 export default function RoomForRentForm({ post }) {
-  const { register, handleSubmit, setValue, watch, getValues } = useForm({
+  const { register, handleSubmit, setValue, watch } = useForm({
     defaultValues: {
       tittle: post?.tittle || '',
       slug: post?.$id || "",
@@ -41,42 +41,36 @@ export default function RoomForRentForm({ post }) {
 }, [navigate]);
 
 
-  const submit = async (data) => {
-    setLoading(true);
-    try {
-      const file = data.image && data.image[0] ? await appwriteServices.uploadFile(data.image[0]) : null;
+   const submit = async (data) => {
+    if (post) {
+        const file = data.image[0] ? await appwriteService.uploadFile(data.image[0]) : null;
 
-      if (post) {
-        if (file && post.image) {
-          await appwriteServices.deleteFile(post.image);
-        }
-        const dbPost = await appwriteServices.updatePost(post.$id, {
-          ...data,
-          image: file ? file.$id : post.image
-        });
-        if (dbPost) {
-          navigate('/');
-        }
-      } else {
-        if (!userData || !userData.$id) {
-          throw new Error('User data is missing');
-        }
         if (file) {
-          const fileId = file.$id;
-          data.image = fileId;
+            appwriteService.deleteFile(post.image);
         }
-        const dbPost = await appwriteServices.createPost({ ...data, userid: userData.$id });
+
+        const dbPost = await appwriteService.updatePost(post.$id, {
+            ...data,
+            image: file ? file.$id : undefined,
+        });
+
         if (dbPost) {
-          navigate('/');
+            navigate(`/post/${dbPost.$id}`);
         }
-      }
-    } catch (error) {
-      console.error('Error during post submission:', error);
-    } finally {
-      setLoading(false);
-      alert("Room added successfully");
+    } else {
+        const file = await appwriteService.uploadFile(data.image[0]);
+
+        if (file) {
+            const fileId = file.$id;
+            data.image = fileId;
+            const dbPost = await appwriteService.createPost({ ...data, userid: userData.$id });
+
+            if (dbPost) {
+                navigate(`/post/${dbPost.$id}`);
+            }
+        }
     }
-  };
+};
 
   const slugTransform = useCallback((value) => {
     if (value && typeof value === "string") {
