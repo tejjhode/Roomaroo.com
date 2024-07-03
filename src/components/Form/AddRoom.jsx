@@ -42,6 +42,7 @@ export default function RoomForRentForm({ post }) {
 
 
    const submit = async (data) => {
+    setLoading(true);
     if (post) {
         const file = data.image[0] ? await appwriteService.uploadFile(data.image[0]) : null;
 
@@ -56,8 +57,14 @@ export default function RoomForRentForm({ post }) {
 
         if (dbPost) {
             navigate(`/post/${dbPost.$id}`);
+            
+              setLoading(false);
+              alert("Room added successfully");
+           
         }
-    } else {
+
+    } 
+    else {
         const file = await appwriteService.uploadFile(data.image[0]);
 
         if (file) {
@@ -70,6 +77,7 @@ export default function RoomForRentForm({ post }) {
             }
         }
     }
+    
 };
 
   const slugTransform = useCallback((value) => {
