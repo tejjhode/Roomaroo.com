@@ -56,7 +56,7 @@ export default function RoomForRentForm({ post }) {
         });
 
         if (dbPost) {
-            navigate(`/post/${dbPost.$id}`);
+            navigate('/');
             
               setLoading(false);
               alert("Room added successfully");
@@ -73,7 +73,7 @@ export default function RoomForRentForm({ post }) {
             const dbPost = await appwriteService.createPost({ ...data, userid: userData.$id });
 
             if (dbPost) {
-                navigate(`/post/${dbPost.$id}`);
+                navigate('/');
             }
         }
     }
